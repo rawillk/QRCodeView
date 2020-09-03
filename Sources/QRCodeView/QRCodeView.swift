@@ -18,11 +18,11 @@ public class QRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override class var layerClass: AnyClass  {
+    public override class var layerClass: AnyClass  {
         return AVCaptureVideoPreviewLayer.self
     }
     
-    override var layer: AVCaptureVideoPreviewLayer {
+    public override var layer: AVCaptureVideoPreviewLayer {
         return super.layer as! AVCaptureVideoPreviewLayer
     }
     
@@ -58,7 +58,7 @@ public class QRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate {
         session.startRunning()
     }
     
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+    public func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         for meta in metadataObjects {
             guard let readableObject = meta as? AVMetadataMachineReadableCodeObject,
                 let stringValue = readableObject.stringValue else { continue }
