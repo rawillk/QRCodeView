@@ -6,7 +6,7 @@ import AVFoundation
 
 public class QRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate {
     
-    var found: (String) -> Bool = {_ in false}
+    public var found: (String) -> Bool = {_ in false}
     fileprivate let session = AVCaptureSession()
     
     public init() {
