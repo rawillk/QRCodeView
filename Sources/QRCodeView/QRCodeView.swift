@@ -25,6 +25,10 @@ public class QRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate {
     public override var layer: AVCaptureVideoPreviewLayer {
         return super.layer as! AVCaptureVideoPreviewLayer
     }
+
+    public var isScanning: Bool {
+        session.isRunning
+    }
     
     public func startScan() {
         guard session.isRunning == false  else { return }
