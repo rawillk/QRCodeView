@@ -32,12 +32,12 @@ public class QRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate {
     
     public func startScan() {
         guard session.isRunning == false  else { return }
-        session.startRunning()
+        DispatchQueue.global().async(execute: session.startRunning)
     }
     
     public func stopScan() {
         guard session.isRunning else { return }
-        session.stopRunning()
+        DispatchQueue.global().async(execute: session.stopRunning)
     }
     
     fileprivate func setup() {
@@ -59,15 +59,17 @@ public class QRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate {
         
         layer.session = session
         self.layer.videoGravity = .resizeAspectFill
-        session.startRunning()
+        startScan()
     }
     
     public func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         for meta in metadataObjects {
             guard let readableObject = meta as? AVMetadataMachineReadableCodeObject,
                 let stringValue = readableObject.stringValue else { continue }
-            if found(stringValue) {
-                AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+            DispatchQueue.main.async {
+                if self.found(stringValue) {
+                    AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+                }
             }
         }
     }
